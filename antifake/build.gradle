@@ -1,5 +1,4 @@
-apply plugin: 'com.android.library'
-apply from: "../publish.gradle"
+apply plugin: 'com.android.library'   // 先应用插件
 
 android {
     compileSdkVersion 31
@@ -19,17 +18,12 @@ android {
 
     buildTypes {
         release {
-            ndk {
-                abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
-            }
+            ndk { abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64" }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
         debug {
-            ndk {
-                abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
-            }
+            ndk { abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64" }
         }
     }
 
@@ -37,20 +31,22 @@ android {
         cmake {
             path "CMakeLists.txt"
             version "3.18.1"
-            arguments "-G", "Unix Makefiles"   // 指定使用 make 构建
+            arguments "-G", "Unix Makefiles"
         }
     }
 
     sourceSets {
         main {
-            jniLibs.srcDir 'src/main/libs'
             java.srcDirs 'src/main/java'
+            jniLibs.srcDir 'src/main/libs'
         }
     }
 }
 
+// 最后再应用发布脚本
+apply from: "../publish.gradle"
+
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api 'androidx.appcompat:appcompat:1.4.1'
-    compileOnly project(':telephony')
 }
