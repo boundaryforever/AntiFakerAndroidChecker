@@ -1,11 +1,17 @@
+// 第一行必须先应用插件
 apply plugin: 'com.android.library'
-apply from:  "../publish.gradle"
 
+// 然后再应用外部脚本
+apply from: "../publish.gradle"
+
+// Android 配置块
 android {
     compileSdkVersion 31
+
     lintOptions {
         abortOnError false
     }
+
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 31
@@ -14,12 +20,11 @@ android {
         externalNativeBuild {
             cmake {
                 version "3.18.1"
-                // 指定编译架构
                 abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
             }
         }
-
     }
+
     buildTypes {
         release {
             ndk {
@@ -28,7 +33,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
 
         debug {
             ndk {
@@ -39,11 +43,8 @@ android {
 
     externalNativeBuild {
         cmake {
-            // 在该文件种设置所要编写的c源码位置，以及编译后so文件的名字
             path 'CMakeLists.txt'
             version "3.18.1"
-            // 关键修改：添加构建工具参数，强制使用 Unix Makefiles
-            arguments "-G", "Unix Makefiles"
         }
     }
 
@@ -53,18 +54,10 @@ android {
             java.srcDirs 'src/main/java'
         }
     }
-    // 确保你的 .so 文件被正确打包
-    packagingOptions {
-        doNotStrip "**/*.so"
-        pickFirst "**/lib/arm64-v8a/libemulator_check.so"
-        pickFirst "**/lib/arm64-v8a/libproperty_get.so"
-    }
-
 }
-
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api 'androidx.appcompat:appcompat:1.4.1'
-    compileOnly project (':telephony')
+    compileOnly project(':telephony')
 }
