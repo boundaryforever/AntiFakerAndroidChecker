@@ -3,10 +3,12 @@
 # 告诉 JitPack 使用 Android SDK 的哪个版本
 jdk:
   - openjdk8
+android:
+  - 21.0.6113669
 
-# 告诉 JitPack 安装 CMake 3.18.1
-# before_install 脚本会在构建前执行
-before_install:
+# 使用 install 步骤来设置环境变量
+install:
   - curl -L -o cmake.tar.gz https://github.com/Kitware/CMake/releases/download/v3.18.1/cmake-3.18.1-Linux-x86_64.tar.gz
   - tar -zxvf cmake.tar.gz
   - export PATH=$PWD/cmake-3.18.1-Linux-x86_64/bin:$PATH
+  - ./gradlew clean -Pgroup=com.github.boundaryforever -Pversion=v1.0.0 -xtest -xlint assemble publishToMavenLocal
