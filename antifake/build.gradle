@@ -1,16 +1,8 @@
-// 第一行必须先应用插件
 apply plugin: 'com.android.library'
-
-// 然后再应用外部脚本
 apply from: "../publish.gradle"
 
-// Android 配置块
 android {
     compileSdkVersion 31
-
-    lintOptions {
-        abortOnError false
-    }
 
     defaultConfig {
         minSdkVersion 14
@@ -28,7 +20,7 @@ android {
     buildTypes {
         release {
             ndk {
-                abiFilters "arm64-v8a", "armeabi-v7a","x86","x86_64"
+                abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
             }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -36,15 +28,16 @@ android {
 
         debug {
             ndk {
-                abiFilters "arm64-v8a", "armeabi-v7a",'x86',"x86_64"
+                abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
             }
         }
     }
 
     externalNativeBuild {
         cmake {
-            path 'CMakeLists.txt'
+            path "CMakeLists.txt"
             version "3.18.1"
+            arguments "-G", "Unix Makefiles"   // 指定使用 make 构建
         }
     }
 

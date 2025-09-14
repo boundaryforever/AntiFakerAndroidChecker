@@ -1,14 +1,13 @@
-# jitpack.yml
-
-# 告诉 JitPack 使用 Android SDK 的哪个版本
 jdk:
-  - openjdk8
-android:
-  - 21.0.6113669
+  - openjdk11
 
-# 使用 install 步骤来设置环境变量
+android:
+  ndk: 21.4.7075529
+  cmake: 3.18.1
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y make ninja-build
+
 install:
-  - curl -L -o cmake.tar.gz https://github.com/Kitware/CMake/releases/download/v3.18.1/cmake-3.18.1-Linux-x86_64.tar.gz
-  - tar -zxvf cmake.tar.gz
-  - export PATH=$PWD/cmake-3.18.1-Linux-x86_64/bin:$PATH
-  - ./gradlew clean -Pgroup=com.github.boundaryforever -Pversion=v1.0.0 -xtest -xlint assemble publishToMavenLocal
+  - ./gradlew clean assembleRelease
