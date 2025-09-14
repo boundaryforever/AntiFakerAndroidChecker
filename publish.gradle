@@ -15,9 +15,9 @@ task androidSourcesJar(type: Jar) {
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'io.github.happylishang'
-    PUBLISH_ARTIFACT_ID = 'antifake'
-    PUBLISH_VERSION = '1.7.1'
+    PUBLISH_GROUP_ID = 'io.github.boundaryforever' // 修改为你的 GitHub 用户名
+    PUBLISH_ARTIFACT_ID = 'AntiFakerAndroidChecker' // 修改为你的仓库名
+    PUBLISH_VERSION = '1.7.1' // 如果需要，请在这里修改版本号
 }
 
 ext["signing.keyId"] = ''
@@ -55,8 +55,8 @@ publishing {
             pom {
                 name = PUBLISH_ARTIFACT_ID
                 description = 'Activity start for result util'
-                // If your project has a dedicated site, use its URL here
-                url = 'https://github.com/happylishang/CacheEmulatorChecker'
+                // 如果你的项目有专门的网站，使用它的 URL
+                url = 'https://github.com/boundaryforever/AntiFakerAndroidChecker'
                 licenses {
                     license {
                         //协议类型，一般默认Apache License2.0的话不用改：
@@ -71,12 +71,11 @@ publishing {
                         email = 'happylishang@163.com'
                     }
                 }
-                // Version control info, if you're using GitHub, follow the format as seen here
+                // 版本控制信息，这里已修改为你的 Git 地址
                 scm {
-                    //修改成你的Git地址：
-                    connection = 'https://github.com/happylishang/CacheEmulatorChecker.git'
-                    developerConnection = 'https://github.com/happylishang/CacheEmulatorChecker.git'
-                    url = 'https://github.com/happylishang/CacheEmulatorChecker'
+                    connection = 'https://github.com/boundaryforever/AntiFakerAndroidChecker.git'
+                    developerConnection = 'https://github.com/boundaryforever/AntiFakerAndroidChecker.git'
+                    url = 'https://github.com/boundaryforever/AntiFakerAndroidChecker'
                 }
                 // A slightly hacky fix so that your POM will include any transitive dependencies
                 // that your library builds upon
